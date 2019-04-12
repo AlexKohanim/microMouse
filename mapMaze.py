@@ -37,6 +37,7 @@ class mapMaze:
         return self.orientation
 
     def turnMouse(self, direction, count):
+        """ Use this for Turning """
         if direction == "right":
             invokeLeftMotor(count)
         else:
@@ -78,8 +79,20 @@ class mapMaze:
 
     def checkForWall(self):
         if self.x < width:
-            self.matrix[x+1][y] = "wall" if invokeRightSensor() else "open"
+            if invokeRightSensor():
+                self.matrix[x+1][y] = "wall"
+                self.matrix = floodfill(self.matrix, self.x + 1, self.y)
+            else:
+                self.matrix[x+1][y] = "open"
         if self.x > 0:
-            self.matrix[x-1][y] = "wall" if invokeLeftSensor() else "open"
+            if invokeLeftSensor():
+                self.matrix[x-1][y] = "wall"
+                self.matrix = floodfill(self.matrix, self.x - 1, self.y)
+            else:
+                self.matrix[x-1][y] = "open"
         if self.y < height:
-            self.matrix[x][y+1] = "wall" if invokeForwardSensor() else "open"
+            if invokeForwardSensor():
+                self.matrix[x][y+1] = "wall"
+                self.matrix = floodfill(self.matrix, self.x, self.y + 1)
+            else:
+                self.matrix[x][y+1] = "open"
