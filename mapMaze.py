@@ -10,11 +10,16 @@ class mapMaze:
 
     def invokeLeftMotor(self, count):
         # invoke motor for turn, multiplier is count
+        orientations = ["North", "West", "South", "East"]
+        previosPosition = orientations.index(self.orientation)
+        self.orientation = orientations[(previosPosition + count) % 4]
         pass
 
     def invokeRightMotor(self, count):
         # invoke motor for turn, multiplier is count
-        pass
+        orientations = ["North", "East", "South", "West"]
+        previosPosition = orientations.index(self.orientation)
+        self.orientation = orientations[(previosPosition + count) % 4]
 
     def setOrientation(self, orientation):
         self.orientation = orientation
